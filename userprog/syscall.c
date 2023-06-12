@@ -47,6 +47,8 @@ syscall_handler (struct intr_frame *f UNUSED) {
 	// TODO: Your implementation goes here.
 	// printf ("system call!\n");
 	// thread_exit ();
+	// int sysnum = f->R.rax;
+	// printf("sysnum : %d \n", sysnum);
 	switch (f->R.rax) {
 		case SYS_HALT:
 			halt ();
@@ -207,10 +209,16 @@ int write (int fd UNUSED, const void *buffer, unsigned size) {
 	if (fd == 0)
 		return -1;
 
+
+
+		
+
 	if (fd == 1) {
 		lock_acquire (&filesys_lock);
+		// printf("lock succ\n");
 		putbuf (buffer, size);
 		lock_release (&filesys_lock);
+		// printf("unlock succ\n");
 		return size;
 	}
 
@@ -218,8 +226,10 @@ int write (int fd UNUSED, const void *buffer, unsigned size) {
 
 	if (file) {
 		lock_acquire (&filesys_lock);
+		// printf("lock succ\n");
 		int write_byte = file_write (file, buffer, size);
-		lock_release (&filesys_lock);
+		lock_acquire (&filesys_lock);
+		// printf("unlock succ\n");
 		return write_byte;
 	}
 }

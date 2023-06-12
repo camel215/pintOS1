@@ -74,8 +74,8 @@ main (void) {
 	bss_init ();
 
 	/* Break command line into arguments and parse options. */
-	argv = read_command_line ();
-	argv = parse_options (argv);
+	argv = read_command_line (); // 커맨드라인을 읽는다.
+	argv = parse_options (argv); // 해당 line option들을 파싱하여 argv에 담는다.
 
 	/* Initialize ourselves as a thread so we can use locks,
 	   then enable console locking. */

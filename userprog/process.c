@@ -223,7 +223,11 @@ process_exec (void *f_name) {
 	if (!success)
 		return -1;
 
+	
 	/* Start switched process. */
+	
+	// hex_dump(_if.rsp, _if.rsp, KERN_BASE - _if.rsp, true);
+
 	do_iret (&_if);
 	NOT_REACHED ();
 }
